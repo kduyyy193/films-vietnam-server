@@ -10,18 +10,22 @@ const resolvers = require("./resolver/resolver");
 // Load data methods
 const mongoDBMethods = require("./data/db");
 
+
+require('dotenv').config()
+
+
 // Connect DB
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://kduyyy:190303@literary-vietnam.cxrshty.mongodb.net/?retryWrites=true&w=majority",
+      process.env.MONGO_DB_URI,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         serverApi: ServerApiVersion.v1,
       }
     );
-
+    
     console.log("MongoDB Connected");
   } catch (error) {
     console.log(error);
@@ -37,14 +41,13 @@ const server = new ApolloServer({
   context: () => ({ mongoDBMethods }),
 });
 
-
-
 const app = express();
+
+
 server.start().then((res) => {
-  
   server.applyMiddleware({ app });
 
-  app.listen({ port: 4000 }, () =>
-    console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
+  app.listen({ port: process.env.PORT }, () =>
+    console.log(`Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
   );
 });
