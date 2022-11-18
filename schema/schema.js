@@ -5,7 +5,7 @@
         id: ID 
         name: String
         genre: String
-        yearOfRelease: Int,
+        yearOfRelease: String,
         author: Author
     }
 
@@ -28,7 +28,7 @@
 
     type Mutation {
         createAuthor( name: String, address: String, date: String): Author
-        createFilm( name: String, genre: String, yearOfRelease: Int, authorId: ID!): Film
+        createFilm( name: String, genre: String, yearOfRelease: String, authorId: ID!): Film
     }
  `
 
